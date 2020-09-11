@@ -1,36 +1,13 @@
-import React, { useContext } from "react";
-import Header from "./Header";
-import { useUser, useFns } from "./context";
+import React from "react";
+import { useSetLang, useT } from "./context";
 
-const Screen = () => {
-  const { user } = useUser();
-  const { fn } = useFns();
-
+export default () => {
+  const setLang = useSetLang();
+  const { t } = useT();
   return (
-    <div>
-      <Header />
-      <br />
-      <button
-        onClick={() =>
-          user.loggedIn
-            ? console.log(`login이 이미 되어있습니다`)
-            : fn.logUserIn()
-        }
-      >
-        logIn
-      </button>
-      <button
-        onClick={() =>
-          user.loggedIn
-            ? fn.logUserOut()
-            : console.log(`login이 되어 있지 않습니다`)
-        }
-      >
-        logOut
-      </button>
-      <h1>First screen</h1>
-    </div>
+    <>
+      <h1>{t("Hello")}</h1>
+      <button onClick={() => setLang("es")}>{t("Translate")}</button>
+    </>
   );
 };
-
-export default Screen;
