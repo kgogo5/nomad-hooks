@@ -1,14 +1,10 @@
 import { v4 as uuid } from "uuid";
+import { ADD, COM, DEL, DELCOM } from "./actions";
 
 export const initialState = {
   toDos: [],
   comToDos: [],
 };
-
-export const ADD = "add";
-export const DEL = "delete";
-export const COM = "complate";
-export const DELCOM = "delete Complate";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -20,19 +16,24 @@ const reducer = (state, action) => {
     case DEL:
       return {
         ...state,
-        toDos: state.toDos.filter((toDo) => toDo.id !== action.delCnt),
+        toDos: state.toDos.filter((toDo) => toDo.id !== action.isCompleted),
+        comToDos: state.comToDos.filter(
+          (toDo) => toDo.id !== action.isCompleted
+        ),
       };
     case COM:
-      const target = state.toDos.find((toDo) => toDo.id === action.comCnt);
+      const target = state.toDos.find((toDo) => toDo.id === action.isCompleted);
       return {
         ...state,
-        toDos: state.toDos.filter((toDo) => toDo.id !== action.comCnt),
+        toDos: state.toDos.filter((toDo) => toDo.id !== action.isCompleted),
         comToDos: [...state.comToDos, { ...target }],
       };
     case DELCOM:
       return {
         ...state,
-        comToDos: state.comToDos.filter((toDo) => toDo.id !== action.delCnt),
+        comToDos: state.comToDos.filter(
+          (toDo) => toDo.id !== action.isCompleted
+        ),
       };
     default:
       return;
